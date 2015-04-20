@@ -1,25 +1,31 @@
 #!/bin/bash
-FILES_DIR="$(pwd)/files"
-SCRIPTS_DIR="$(pwd)/scripts"
-TEST_DIR="$(pwd)/test"
+LB_FILES_DIR="$(pwd)/files"
+LB_SCRIPTS_DIR="$(pwd)/scripts"
+LB_NEW_DIR=
+LB_TEST_MODE_ENGAGE="${LB_NEW_DIR}"
+
+# Check for test mode
+if [[ "${1}" = "--test" ]]; then
+    export LB_TEST_MODE="HELL_YEAH"
+    LB_NEW_DIR="~"
+else
+    export LB_TEST_MODE="HELL_NAW"
+    LB_NEW_DIR="$(pwd)/test"
+fi
 
 # Source the linux_base functions
-source ${SCRIPTS_DIR}/util_functions.sh
+source ${LB_SCRIPTS_DIR}/util_functions.sh
 
 # The basics
-test -e ${TEST_DIR}/.bash_aliases && lb_bak ${TEST_DIR}/.bash_aliases
-ln -s ${FILES_DIR}/bash_aliases ${TEST_DIR}/.bash_aliases
-test -e ${TEST_DIR}/.bashrc && lb_bak ${TEST_DIR}/.bashrc
-ln -s ${FILES_DIR}/bashrc ${TEST_DIR}/.bashrc
-test -e ${TEST_DIR}/.profile && lb_bak ${TEST_DIR}/.profile
-ln -s ${FILES_DIR}/profile ${TEST_DIR}/.profile
-test -e ${TEST_DIR}/.dircolors && lb_bak ${TEST_DIR}/.dircolors
-ln -s ${FILES_DIR}/dircolors ${TEST_DIR}/.dircolors
-source ${TEST_DIR}/.bashrc
+lb_testwrap lb_mklink ${LB_FILES_DIR}/bashrc ${LB_NEW_DIR}/.bashrc
+lb_testwrap lb_mklink ${LB_FILES_DIR}/bash_aliases ${LB_NEW_DIR}/.bash_aliases
+lb_testwrap lb_mklink ${LB_FILES_DIR}/profile ${LB_NEW_DIR}/.profile
+lb_testwrap lb_mklink ${LB_FILES_DIR}/dircolors ${LB_NEW_DIR}/.dircolors
+lb_testwrap source ${LB_NEW_DIR}/.bashrc
 
 # Vim
 if [[ -e '/usr/bin/vim' ]]; then
-    ln -s ${FILES_DIR}/vimrc ${TEST_DIR}/.vimrc
+    lb_testwrap lb_mklink ${LB_FILES_DIR}/vimrc ${LB_NEW_DIR}/.vimrc
 else
     echo "Vim not found. Fix that shit."
     return 1
@@ -27,13 +33,14 @@ fi
 
 # Guake
 if [[ -e /usr/local/bin/guake ]]; then
-    ln -s ${FILES_DIR}/guake ${TEST_DIR}/.gconf/schemas/apps/guake
-    guake -q
-    ( nohup guake & ) &> /dev/null
+    lb_testwrap lb_mklink ${LB_FILES_DIR}/guake ${LB_NEW_DIR}/.gconf/schemas/apps/guake
+    echo "You will probably want to restart guake to make sure you get the new settings."
 else
     echo "Guake not found. Dafuq you doin' without Guake, bro?"
     return 1
 fi
 
-unset -v SCRIPTS_DIR
-unset -v FILES_DIR
+unset -v LB_TEST_MODE
+unset -v LB_NEW_DIR
+unset -v LB_SCRIPTS_DIR
+unset -v LB_FILES_DIR

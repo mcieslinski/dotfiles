@@ -10,8 +10,10 @@ set smartindent
 set cinoptions+=g0,:0
 set incsearch
 syntax on
-"filetype indent on
-"set laststatus=2
+filetype indent on
+set laststatus=2
+hi Folded ctermbg=None
+hi Folded ctermfg=Magenta
 
 """"""""""""""""""
 " KEY REMAPS LOL "
@@ -19,17 +21,17 @@ syntax on
 let mapleader = "-"
 " Vim management remaps
 " Tab-left
-nnoremap                <F7>        <esc>:tabp<cr>
-inoremap                <F7>        <esc>:tabp<cr>
+nnoremap    <silent>    <F7>        <esc>:tabp<cr>
+inoremap    <silent>    <F7>        <esc>:tabp<cr>
 " Tab-right
-nnoremap                <F8>        <esc>:tabn<cr>
-inoremap                <F8>        <esc>:tabn<cr>
+nnoremap    <silent>    <F8>        <esc>:tabn<cr>
+inoremap    <silent>    <F8>        <esc>:tabn<cr>
 " Split-left
-nnoremap                <F9>        <c-w>h
-inoremap                <F9>        <esc><c-w>h
+nnoremap    <silent>    <F9>        <c-w>h
+inoremap    <silent>    <F9>        <esc><c-w>h
 " Split-right
-nnoremap                <F10>       <c-w>l
-inoremap                <F10>       <esc><c-w>l
+nnoremap    <silent>    <F10>       <c-w>l
+inoremap    <silent>    <F10>       <esc><c-w>l
 " Resize current window horizontal++
 nnoremap    <silent>    <c-F10>     <c-w>>
 " Resize current window horizontal--
@@ -46,20 +48,28 @@ nnoremap    <silent>    <leader>sv  :so $MYVIMRC<cr>
 inoremap    <silent>    <c-u>       <esc>viwUi
 " Surround selected section in quotes
 vnoremap    <silent>    <leader>"   <esc>`>a"<esc>`<i"<esc>`>ll
-" Header guard-ify selection
-vnoremap    <silent>    <leader>h   U<esc>`<i<esc>f.r_`<i#ifndef <esc>yyp:.s/ifndef/define<cr>
 
 """""""""""""""""
 " ABBREVIATIONS "
 """""""""""""""""
 " VICTORY signature
-iabbrev     vsig    /*!<cr> *  \file <c-r>%<cr>*  \author Michael R. Cieslinski, Jr. <mcieslinski@dcscorp.com><cr>*  \date  <c-r>=strftime("%b %d %Y")<cr><cr>*  \brief <cr>*<cr>*/ 
+iabbrev     vsig /*!<cr>*  \file <c-r>%<cr>*  \author Michael R. Cieslinski, Jr. <mcieslinski@dcscorp.com><cr>*  \date  <c-r>=strftime("%b %d %Y")<cr><cr>*  \brief <cr>*<cr>*/<esc> 
 
 """"""""""""""""
 " AUTOCOMMANDS "
 """"""""""""""""
-augroup my_autocommands
+augroup xml_autocommands
     autocmd     BufNewFile,BufRead      *.xml,*.wsdl,*.xsd      setlocal nowrap
+augroup END
+
+augroup cpp_commands
+    autocmd     BufNewFile,BufRead      *.h,*.cpp,*.c   nnoremap <buffer>           <leader>f zfa{
+    autocmd     BufNewFile,BufRead      *.h,*.cpp,*.c   vnoremap <buffer>           <leader>f :g/^{/exe 'normal! zfa{'<cr>
+    autocmd     BufNewFile,BufRead      *.h,*.cpp,*.c   vnoremap <buffer>           <leader>F :g/^{/exe 'normal! za'<cr>
+    autocmd     BufNewFile,BufRead      *.h,*.cpp,*.c   nnoremap <buffer>           <leader>/ 0i//<esc>a=<esc>77.<esc>yyo<esc>0i//<esc>p<up>A<space>
+    autocmd     BufNewFile,BufRead      *.h,*.cpp,*.c   nnoremap <buffer>           <leader>- O<esc>0Di//<esc>78a-<esc><down>
+" Header guard-ify selection
+    autocmd     BufNewFile,BufRead      *.h,*.cpp,*.c   vnoremap <buffer> <silent>  <leader>h   U<esc>`<i<esc>f.r_`<i#ifndef <esc>yyp:.s/ifndef/define<cr> o<cr>#endif<esc><up>
 augroup END
 
 """""""""""

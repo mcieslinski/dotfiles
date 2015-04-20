@@ -1,1 +1,0 @@
-/home/michael/linux_base/files/bash_aliases

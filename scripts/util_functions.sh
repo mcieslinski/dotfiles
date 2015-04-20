@@ -23,8 +23,39 @@ lb_bak()
     fi
 }
 
+lb_noterm()
+{
+    (nohup $@ &) &> /dev/null
+}
+
+lb_testwrap()
+{
+    if [[ "${LB_TEST_MODE}" = "HELL_YEAH" ]]; then
+        echo $@
+    else
+        $@
+    fi
+}
+
+lb_mklink()
+{
+    if [[ -e ${2} ]]; then
+        if [[ -L ${2} ]]; then
+            echo "A link already exists for ${2}. Delete it? (y/n):"
+            read deleteLink
+            test "${deleteLink}" = "y" && rm ${2} && ln -s ${1} ${2}
+        else
+            lb_bak ${2}
+            ln -s ${1} ${2}
+        fi
+    else
+        ln -s ${1} ${2}
+    fi
+}
+
 lb_unsource()
 {
     unset -f lb_bak
+    unset -f lb_noterm
     unset -f lb_unsource
 }
