@@ -9,6 +9,7 @@ set shiftwidth=4
 set smartindent
 set cinoptions+=g0,:0
 set incsearch
+set cursorline
 syntax on
 filetype indent on
 set laststatus=2
@@ -36,7 +37,7 @@ inoremap    <silent>    <F10>       <esc><c-w>l
 nnoremap    <silent>    <c-F10>     <c-w>>
 " Resize current window horizontal--
 nnoremap    <silent>    <c-F9>      <c-w><
-" Resize current window to be half the size of the total window
+" Equalize size of all windows
 nnoremap    <silent>    <c-F11>     <c-w>=
 " Edit .vimrc
 nnoremap    <silent>    <leader>ev  :vsplit $MYVIMRC<cr>
@@ -48,6 +49,8 @@ nnoremap    <silent>    <leader>sv  :so $MYVIMRC<cr>
 inoremap    <silent>    <c-u>       <esc>viwUi
 " Surround selected section in quotes
 vnoremap    <silent>    <leader>"   <esc>`>a"<esc>`<i"<esc>`>ll
+vnoremap    <silent>    <leader>(   <esc>`>a)<esc>`<i(<esc>`>ll
+vnoremap    <silent>    <leader><   <esc>`<<left>v`>
 
 """""""""""""""""
 " ABBREVIATIONS "
@@ -62,14 +65,19 @@ augroup xml_autocommands
     autocmd     BufNewFile,BufRead      *.xml,*.wsdl,*.xsd      setlocal nowrap
 augroup END
 
-augroup cpp_commands
-    autocmd     BufNewFile,BufRead      *.h,*.cpp,*.c   nnoremap <buffer>           <leader>f zfa{
-    autocmd     BufNewFile,BufRead      *.h,*.cpp,*.c   vnoremap <buffer>           <leader>f :g/^{/exe 'normal! zfa{'<cr>
-    autocmd     BufNewFile,BufRead      *.h,*.cpp,*.c   vnoremap <buffer>           <leader>F :g/^{/exe 'normal! za'<cr>
-    autocmd     BufNewFile,BufRead      *.h,*.cpp,*.c   nnoremap <buffer>           <leader>/ 0i//<esc>a=<esc>77.<esc>yyo<esc>0i//<esc>p<up>A<space>
-    autocmd     BufNewFile,BufRead      *.h,*.cpp,*.c   nnoremap <buffer>           <leader>- O<esc>0Di//<esc>78a-<esc><down>
-" Header guard-ify selection
-    autocmd     BufNewFile,BufRead      *.h,*.cpp,*.c   vnoremap <buffer> <silent>  <leader>h   U<esc>`<i<esc>f.r_`<i#ifndef <esc>yyp:.s/ifndef/define<cr> o<cr>#endif<esc><up>
+augroup cpp_autocommands
+    " Fold by '{'
+    autocmd     BufNewFile,BufRead      *.h,*.c,*.cpp,*.hpp   nnoremap <buffer>           <leader>f zfa{
+    " Fold a selection by lines starting with '{'
+    autocmd     BufNewFile,BufRead      *.h,*.c,*.cpp,*.hpp   vnoremap <buffer>           <leader>f :g/^{/exe 'normal! zfa{'<cr>
+    " Unfold a selection by lines starting with '{'
+    autocmd     BufNewFile,BufRead      *.h,*.c,*.cpp,*.hpp   vnoremap <buffer>           <leader>F :g/^{/exe 'normal! za'<cr>
+    " Add a comment block
+    autocmd     BufNewFile,BufRead      *.h,*.c,*.cpp,*.hpp   nnoremap <buffer>           <leader>/ o<esc>0Di/*<esc>76A=<esc>a*\<esc>o<esc>0Di\*<esc>76A=<esc>a*/<esc>O
+    " Add a separator comment line //------------...
+    autocmd     BufNewFile,BufRead      *.h,*.c,*.cpp,*.hpp   nnoremap <buffer>           <leader>- o<esc>0i//<esc>78a-<esc><down>
+    " Generate header guard
+    autocmd     BufNewFile,BufRead      *.h,*.hpp             nnoremap <buffer>  <leader>h   "%PVU<esc>`<<esc>f.r_`<:s/\a*\///g<cr>i#ifndef<space><esc>yyp:.s/ifndef/define<cr> o<cr>#endif<esc><up>
 augroup END
 
 """""""""""
