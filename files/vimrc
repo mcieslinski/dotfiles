@@ -49,7 +49,9 @@ nnoremap    <silent>    <leader>sv  :so $MYVIMRC<cr>
 inoremap    <silent>    <c-u>       <esc>viwUi
 " Surround selected section in quotes
 vnoremap    <silent>    <leader>"   <esc>`>a"<esc>`<i"<esc>`>ll
+" Surround selected section in parentheses
 vnoremap    <silent>    <leader>(   <esc>`>a)<esc>`<i(<esc>`>ll
+" Expand current selection left
 vnoremap    <silent>    <leader><   <esc>`<<left>v`>
 
 """""""""""""""""
@@ -67,17 +69,31 @@ augroup END
 
 augroup cpp_autocommands
     " Fold by '{'
-    autocmd     BufNewFile,BufRead      *.h,*.c,*.cpp,*.hpp   nnoremap <buffer>           <leader>f zfa{
+    autocmd     BufNewFile,BufRead      *.h,*.c,*.cpp,*.hpp     nnoremap    <buffer>            <leader>f   zfa{
+
     " Fold a selection by lines starting with '{'
-    autocmd     BufNewFile,BufRead      *.h,*.c,*.cpp,*.hpp   vnoremap <buffer>           <leader>f :g/^{/exe 'normal! zfa{'<cr>
+    autocmd     BufNewFile,BufRead      *.h,*.c,*.cpp,*.hpp     vnoremap    <buffer>            <leader>f   :g/^{/exe 'normal! zfa{'<cr>
+
     " Unfold a selection by lines starting with '{'
-    autocmd     BufNewFile,BufRead      *.h,*.c,*.cpp,*.hpp   vnoremap <buffer>           <leader>F :g/^{/exe 'normal! za'<cr>
-    " Add a comment block
-    autocmd     BufNewFile,BufRead      *.h,*.c,*.cpp,*.hpp   nnoremap <buffer>           <leader>/ o<esc>0Di/*<esc>76A=<esc>a*\<esc>o<esc>0Di\*<esc>76A=<esc>a*/<esc>O
+    autocmd     BufNewFile,BufRead      *.h,*.c,*.cpp,*.hpp     vnoremap    <buffer>            <leader>F   :g/^{/exe 'normal! za'<cr>
+
+    " Comment a selection
+    autocmd     BufNewFile,Bufread      *.h,*.c,*.cpp,*.hpp     vnoremap    <buffer><silent>    <leader>/   :g!/^\/\//s/^/\/\//<cr>
+
+    " Add a comment block with /*=====*\
+    autocmd     BufNewFile,BufRead      *.h,*.c,*.cpp,*.hpp     nnoremap    <buffer>            <leader>=   o<esc>0Di/*<esc>76A=<esc>a*\<esc>o<esc>0Di\*<esc>76A=<esc>a*/<esc>O
+
+    " Add a comment block with /*-----*\
+    autocmd     BufNewFile,BufRead      *.h,*.c,*.cpp,*.hpp     nnoremap    <buffer>            <leader>-   o<esc>0Di/*<esc>76A-<esc>a*\<esc>o<esc>0Di\*<esc>76A-<esc>a*/<esc>O
+
     " Add a separator comment line //------------...
-    autocmd     BufNewFile,BufRead      *.h,*.c,*.cpp,*.hpp   nnoremap <buffer>           <leader>- o<esc>0i//<esc>78a-<esc><down>
+    autocmd     BufNewFile,BufRead      *.h,*.c,*.cpp,*.hpp     nnoremap    <buffer>            <leader>/   o<esc>0i//<esc>78a-<esc><down>
+
     " Generate header guard
-    autocmd     BufNewFile,BufRead      *.h,*.hpp             nnoremap <buffer>  <leader>h   "%PVU<esc>`<<esc>f.r_`<:s/\a*\///g<cr>i#ifndef<space><esc>yyp:.s/ifndef/define<cr> o<cr>#endif<esc><up>
+    autocmd     BufNewFile,BufRead      *.h,*.hpp               nnoremap    <buffer>            <leader>h   "%PVU<esc>`<<esc>f.r_`<:s/\(\a\/\)*//g<cr>i#ifndef<space><esc>yyp:.s/ifndef/define<cr> o<cr>#endif<esc><up>
+
+    " Include corresponding .h file in cpp
+    "autocmd     BufNewFile,BufRead      *.c,*.cpp               nnoremap    <buffer>
 augroup END
 
 """""""""""
