@@ -8,6 +8,7 @@ set softtabstop=4
 set shiftwidth=4
 set smartindent
 set cinoptions+=g0,:0
+set backspace=indent,eol,start
 set incsearch
 set cursorline
 syntax on
@@ -74,6 +75,11 @@ augroup xml_autocommands
 augroup END
 
 augroup cpp_autocommands
+    autocmd     BufNewFile,BufRead      *.h,*.c,*.cpp,*.hpp     setlocal number
+    autocmd     BufNewFile,BufRead      *.h,*.c,*.cpp,*.hpp     hi LineNr ctermfg=DarkGrey
+    autocmd     BufNewFile,BufRead      *.h,*.c,*.cpp,*.hpp     hi CursorLineNr ctermfg=White
+    autocmd     BufNewFile,BufRead      *.h,*.c,*.cpp,*.hpp     hi LineNr ctermbg=None
+    autocmd     BufNewFile,BufRead      *.h,*.c,*.cpp,*.hpp     hi CursorLineNr ctermbg=None
     " Fold by '{'
     autocmd     BufNewFile,BufRead      *.h,*.c,*.cpp,*.hpp     nnoremap    <buffer>            <leader>f   zfa{
 

@@ -12,7 +12,9 @@ alias qtcreator="noterm /opt/Qt5.4.0/Tools/QtCreator/bin/qtcreator.sh"
 alias gedit="noterm /usr/bin/gedit"
 alias makeroute="sudo route add -net 224.0.0.0 netmask 240.0.0.0 dev eth0"
 alias ccmake="cmake-gui"
+alias ccache="vim CMakeCache.txt"
 alias wireshark="noterm sudo wireshark"
+alias gitk="noterm gitk"
 
 # VICTORY aliases
 export VICTORY_ROOT="/home/michael/VICTORY"
@@ -28,8 +30,8 @@ alias nascheck="ping -c 3 192.168.1.96"
 # VECTOR aliases
 export VECTOR_ROOT="/home/michael/VMSTUFF/vector"
 alias ve="cd ${VECTOR_ROOT}"
-alias vec="cd ${VECTOR_ROOT}/common"
-alias vej="cd ${VECTOR_ROOT}/common/j2a/trunk"
+alias vec="cd ${VECTOR_ROOT}/trunk/common"
+alias vej="cd ${VECTOR_ROOT}/trunk/common/j2a"
 alias vebuild="cd ${VECTOR_ROOT}/build"
 
 function noterm()
