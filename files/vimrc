@@ -51,22 +51,6 @@ nnoremap    <silent>    <leader>ev  :vsplit $MYVIMRC<cr>
 " Source .vimrc
 nnoremap    <silent>    <leader>sv  :so $MYVIMRC<cr>
 
-" Editing remaps
-" Uppercase current word
-inoremap    <silent>    <c-u>       <esc>viwUi
-" Surround selected section in quotes
-vnoremap    <silent>    <leader>"   <esc>`>a"<esc>`<i"<esc>`>ll
-" Surround selected section in parentheses
-vnoremap    <silent>    <leader>(   <esc>`>a)<esc>`<i(<esc>`>ll
-" Expand current selection left
-vnoremap    <silent>    <leader><   <esc>`<<left>v`>
-
-"""""""""""""""""
-" ABBREVIATIONS "
-"""""""""""""""""
-" VICTORY signature
-iabbrev     vsig /*!<cr>*  \file <c-r>%<cr>*  \author Michael R. Cieslinski, Jr. <mcieslinski@dcscorp.com><cr>*  \date  <c-r>=strftime("%b %d %Y")<cr><cr>*  \brief <cr>*<cr>*/<esc> 
-
 """"""""""""""""
 " AUTOCOMMANDS "
 """"""""""""""""
