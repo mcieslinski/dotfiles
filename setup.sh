@@ -7,10 +7,10 @@ LB_TEST_MODE_ENGAGE="${LB_NEW_DIR}"
 # Check for test mode
 if [[ "${1}" = "--test" ]]; then
     export LB_TEST_MODE="HELL_YEAH"
-    LB_NEW_DIR="~"
+    LB_NEW_DIR="$(pwd)/test"
 else
     export LB_TEST_MODE="HELL_NAW"
-    LB_NEW_DIR="$(pwd)/test"
+    LB_NEW_DIR="${HOME}"
 fi
 
 # Source the linux_base functions
@@ -24,19 +24,12 @@ lb_testwrap lb_mklink ${LB_FILES_DIR}/dircolors ${LB_NEW_DIR}/.dircolors
 lb_testwrap source ${LB_NEW_DIR}/.bashrc
 
 # Vim
-if [[ -e '/usr/bin/vim' ]]; then
+if [[ -e $(which vim) ]]; then
     lb_testwrap lb_mklink ${LB_FILES_DIR}/vimrc ${LB_NEW_DIR}/.vimrc
+    echo "Vim is already installed."
 else
-    echo "Vim not found. Fix that shit."
-    return 1
-fi
-
-# Guake
-if [[ -e /usr/local/bin/guake ]]; then
-    lb_testwrap lb_mklink ${LB_FILES_DIR}/guake ${LB_NEW_DIR}/.gconf/schemas/apps/guake
-    echo "You will probably want to restart guake to make sure you get the new settings."
-else
-    echo "Guake not found. Dafuq you doin' without Guake, bro?"
+    sudo apt-get install vim && echo "Vim installed."
+    lb_testwrap lb_mklink ${LB_FILES_DIR}/vimrc ${LB_NEW_DIR}/.vimrc
     return 1
 fi
 
@@ -44,3 +37,5 @@ unset -v LB_TEST_MODE
 unset -v LB_NEW_DIR
 unset -v LB_SCRIPTS_DIR
 unset -v LB_FILES_DIR
+
+source ${HOME}/.bashrc
