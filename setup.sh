@@ -30,6 +30,7 @@ if [[ -e $(which vim) ]]; then
 else
     sudo apt-get install vim && echo "Vim installed."
     lb_testwrap lb_mklink ${LB_FILES_DIR}/vimrc ${LB_NEW_DIR}/.vimrc
+    exit 1
 fi
 
 unset -v LB_TEST_MODE
