@@ -34,6 +34,15 @@ alias vec="cd ${VECTOR_ROOT}/trunk/common"
 alias vej="cd ${VECTOR_ROOT}/trunk/common/j2a"
 alias vebuild="cd ${VECTOR_ROOT}/build"
 
+function secho()
+{
+    if [ $# -eq 2 ]; then
+        echo -ne $1 > $2
+    else
+        echo "Usage: secho <data> <serial/port/path>"
+    fi
+}
+
 function noterm()
 {
     (nohup $@ &) &> /dev/null
