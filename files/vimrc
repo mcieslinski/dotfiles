@@ -56,6 +56,7 @@ nnoremap    <silent>    <leader>sv  :so $MYVIMRC<cr>
 """"""""""""""""
 augroup xml_autocommands
     autocmd     BufNewFile,BufRead      *.xml,*.wsdl,*.xsd      setlocal nowrap
+    autocmd     BufNewFile,BufRead      *.xml,*.wsdl,*.xsd      vnoremap    <buffer>            <leader>/   <esc>`<i<!--<esc>`>a--><esc>
 augroup END
 
 augroup cpp_autocommands
