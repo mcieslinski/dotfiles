@@ -32,6 +32,17 @@ function get_git()
             if [ $? -ne 0 ]; then
                 bstatus=" - $(echo $git_status | grep -i "Your branch" | grep -Eio "(ahead|behind)")"
             fi
+            
+            bnfiles=$(git status --porcelain | wc -l)
+            if [ $bnfiles -ne 0 ]; then
+                if [ $bnfiles -eq 1 ]; then
+                    bnfiles=" - %F{red}${bnfiles} change%f"
+                else
+                    bnfiles=" - %F{red}${bnfiles} changes%f"
+                fi
+            else
+                bnfiles=""
+            fi
         fi
     else
         bname=''
@@ -39,7 +50,7 @@ function get_git()
         bnfiles=''
     fi
 
-    echo "${bname}${bstatus}"
+    echo "${bname}${bstatus}${bnfiles}%F{yellow}"
 }
 
 function get_last_cmd()
