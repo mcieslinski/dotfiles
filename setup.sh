@@ -18,10 +18,11 @@ source ${LB_SCRIPTS_DIR}/util_functions.sh
 
 # The basics
 lb_testwrap lb_mklink ${LB_FILES_DIR}/bashrc ${LB_NEW_DIR}/.bashrc
+lb_testwrap lb_mklink ${LB_FILES_DIR}/zshrc ${LB_NEW_DIR}/.zshrc
 lb_testwrap lb_mklink ${LB_FILES_DIR}/bash_aliases ${LB_NEW_DIR}/.bash_aliases
 lb_testwrap lb_mklink ${LB_FILES_DIR}/profile ${LB_NEW_DIR}/.profile
 lb_testwrap lb_mklink ${LB_FILES_DIR}/dircolors ${LB_NEW_DIR}/.dircolors
-lb_testwrap source ${LB_NEW_DIR}/.bashrc
+lb_testwrap source ${LB_NEW_DIR}/.zshrc
 
 # Vim
 if [[ -e $(which vim) ]]; then
@@ -37,5 +38,3 @@ unset -v LB_TEST_MODE
 unset -v LB_NEW_DIR
 unset -v LB_SCRIPTS_DIR
 unset -v LB_FILES_DIR
-
-source ${HOME}/.bashrc
