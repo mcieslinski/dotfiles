@@ -57,7 +57,7 @@ function get_last_cmd()
 {
     local last_cmd
     last_cmd=$(history | tail -n 1)
-    last_cmd=${last_cmd:1}
+    last_cmd=${last_cmd:2}
     last_cmd=${last_cmd/  /:}
     echo "${last_cmd}"
 }
