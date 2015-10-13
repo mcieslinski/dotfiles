@@ -25,23 +25,17 @@ function get_git()
         bname=$(echo $git_status|grep "On branch")
         if [ $? -ne 0 ]; then
             bname=$(echo $git_status|grep "detached")
-            bname="%F{red}DETACHED: %f%F{yellow}${bname/*detached at /}%f%F{yellow}"
+            echo ${git_status} | grep "rebas" &> /dev/null
+            if [ $? -ne 0 ]; then
+                bname="%F{red}DETACHED: %f%F{yellow}${bname/*detached at /}%f%F{yellow}"
+            else
+                bname="%F{red}DETACHED: %f%F{yellow}rebasing"
+            fi
         else
             bname=$(git symbolic-ref --short -q HEAD)
             echo $git_status | grep -i "up-to-date" &> /dev/null
             if [ $? -ne 0 ]; then
-                bstatus=" - $(echo $git_status | grep -i "Your branch" | grep -Eio "(ahead|behind)")"
-            fi
-            
-            bnfiles=$(git status --porcelain | wc -l)
-            if [ $bnfiles -ne 0 ]; then
-                if [ $bnfiles -eq 1 ]; then
-                    bnfiles=" - %F{red}${bnfiles} change%f"
-                else
-                    bnfiles=" - %F{red}${bnfiles} changes%f"
-                fi
-            else
-                bnfiles=""
+                bstatus=" - $(echo $git_status | grep -i "Your branch" | grep -Eio "(ahead|behind|diverged)")"
             fi
         fi
     else
@@ -56,10 +50,11 @@ function get_git()
 function get_last_cmd()
 {
     local last_cmd
-    last_cmd=$(history | tail -n 1)
-    last_cmd=${last_cmd:2}
-    last_cmd=${last_cmd/  /:}
-    echo "${last_cmd}"
+    
+    #echo "%7"
+    last_cmd="$(history | tail -n 1 | awk '{ printf $1":" }')$history[$[HISTCMD-1]]"
+    psvar[7]="$last_cmd"
+    print "$last_cmd"
 }
 
 PROMPT='%B%F{red}%n%f%b%B%F{magenta} -- %f%b%B%F{blue}$(get_pwd)%f%b%B%F{magenta} -- %f%b%B%F{yellow}{$(get_git)}%f%b%B%F{magenta} -- %f%b%B%F{green}%(?..%S)[$(get_last_cmd)]%(?..%s)%f%b
