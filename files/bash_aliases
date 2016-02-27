@@ -34,6 +34,11 @@ alias vec="cd ${VECTOR_ROOT}/trunk/common"
 alias vej="cd ${VECTOR_ROOT}/trunk/common/j2a"
 alias vebuild="cd ${VECTOR_ROOT}/build"
 
+function download()
+{
+    wget -c $1 -P ~/Downloads
+}
+
 function secho()
 {
     if [ $# -eq 2 ]; then
