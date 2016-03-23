@@ -23,6 +23,7 @@ lb_testwrap lb_mklink ${LB_FILES_DIR}/michael_theme.zsh ${LB_NEW_DIR}/.michael_t
 lb_testwrap lb_mklink ${LB_FILES_DIR}/bash_aliases ${LB_NEW_DIR}/.bash_aliases
 lb_testwrap lb_mklink ${LB_FILES_DIR}/profile ${LB_NEW_DIR}/.profile
 lb_testwrap lb_mklink ${LB_FILES_DIR}/dircolors ${LB_NEW_DIR}/.dircolors
+lb_testwrap lb_mklink ${LB_FILES_DIR}/shell_common ${LB_NEW_DIR}/.shell_common
 lb_testwrap source ${LB_NEW_DIR}/.zshrc
 
 # Vim
