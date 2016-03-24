@@ -8,4 +8,5 @@ apt-cache policy golang | grep -i "installed" | grep -i "none" &> /dev/null
 
 if [ $? -eq 0 ]; then
     export GOROOT=/opt/go
+    export PATH=${PATH}:${GOROOT}/bin
 fi

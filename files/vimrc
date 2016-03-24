@@ -59,6 +59,14 @@ augroup xml_autocommands
     autocmd     BufNewFile,BufRead      *.xml,*.wsdl,*.xsd      vnoremap    <buffer>            <leader>/   <esc>`<i<!--<esc>`>a--><esc>
 augroup END
 
+augroup go_autocommands
+    autocmd     BufNewFile,BufRead      *.go     setlocal number
+    autocmd     BufNewFile,BufRead      *.go     hi LineNr ctermfg=DarkGrey
+    autocmd     BufNewFile,BufRead      *.go     hi CursorLineNr ctermfg=White
+    autocmd     BufNewFile,BufRead      *.go     hi LineNr ctermbg=None
+    autocmd     BufNewFile,BufRead      *.go     hi CursorLineNr ctermbg=None
+augroup END
+
 augroup cpp_autocommands
     autocmd     BufNewFile,BufRead      *.h,*.c,*.cpp,*.hpp     setlocal number
     autocmd     BufNewFile,BufRead      *.h,*.c,*.cpp,*.hpp     hi LineNr ctermfg=DarkGrey
