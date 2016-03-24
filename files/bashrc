@@ -110,13 +110,13 @@ if ! shopt -oq posix; then
 fi
 
 
-export QT_DIR="/usr/local/Qt/5.3/gcc"
+export QT_DIR="/opt/Qt5.5.1/5.5"
 export QT_CREATOR="/usr/local/Qt/Tools/QtCreator"
-export SSMI_ROOT="/home/<user>/RVCA"
 export QT_PLUGIN_PATH="$SSMI_ROOT"
-export PATH="$SSMI_ROOT:$QT_DIR/bin:$QT_CREATOR/bin:$PATH"
+export PATH="$QT_DIR/bin:$QT_CREATOR/bin:$PATH"
 export LD_LIBRARY_PATH="$SSMI_ROOT:$LD_LIBRARY_PATH"
 export LD_LIBRARY_PATH="$QT_PLUGIN_PATH/designer:$LD_LIBRARY_PATH"
 export QT_INSTALL_PATH=$SSMI_ROOT
+export SSMI_ROOT="/home/vrs/RVCA"
 export OSPL_URI=file://$SSMI_ROOT/config/services/ospl.xml
 
