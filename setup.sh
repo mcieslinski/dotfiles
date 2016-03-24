@@ -26,6 +26,24 @@ lb_testwrap lb_mklink ${LB_FILES_DIR}/dircolors ${LB_NEW_DIR}/.dircolors
 lb_testwrap lb_mklink ${LB_FILES_DIR}/shell_common ${LB_NEW_DIR}/.shell_common
 lb_testwrap source ${LB_NEW_DIR}/.zshrc
 
+# Golang. Duh.
+if [ ! -d ${HOME}/go_workspace ]; then
+    gospace=${HOME}/go_workspace
+    lb_testwrap mkdir -p ${gospace}/src
+    lb_testwrap mkdir -p ${gospace}/bin
+    lb_testwrap mkdir -p ${gospace}/pkg
+fi
+
+apt-cache policy golang | grep -i "installed" | grep -i "none" &> /dev/null
+aptgo=$?
+
+test -d /opt/go &> /dev/null
+optgo=$?
+
+if [ $? -ne 0 ]; then
+    echo "You really need to install go."
+fi
+
 # Vim
 if [[ -e $(which vim) ]]; then
     lb_testwrap lb_mklink ${LB_FILES_DIR}/vimrc ${LB_NEW_DIR}/.vimrc
