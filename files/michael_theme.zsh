@@ -57,5 +57,7 @@ function get_last_cmd()
     print "$last_cmd"
 }
 
-PROMPT='%B%F{red}%n%f%b%B%F{magenta} -- %f%b%B%F{blue}$(get_pwd)%f%b%B%F{magenta} -- %f%b%B%F{yellow}{$(get_git)}%f%b%B%F{magenta} -- %f%b%B%F{green}%(?..%S)[$(get_last_cmd)]%(?..%s)%f%b
-> '
+PROMPT='%B%F{blue}$(get_pwd)%f%F{yellow}>%f%b '
+
+#PROMPT='%B%F{red}%n%f%b%B%F{magenta} -- %f%b%B%F{blue}$(get_pwd)%f%b%B%F{magenta} -- %f%b%B%F{yellow}{$(get_git)}%f%b%B%F{magenta} -- %f%b%B%F{green}%(?..%S)[$(get_last_cmd)]%(?..%s)%f%b
+#> '
