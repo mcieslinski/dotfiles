@@ -36,7 +36,16 @@ alias vebuild="cd ${VECTOR_ROOT}/build"
 
 function download()
 {
-    wget -c $1 -P ~/Downloads
+    if [ -z $2 ]; then
+        wget -c $1 -P ~/Downloads
+    else
+        if [ -d $2 ]; then
+            wget -c $1 -P $2
+        else
+            echo "Specified download location no existy."
+            return 1
+        fi
+    fi
 }
 
 function secho()

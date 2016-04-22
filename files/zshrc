@@ -21,7 +21,6 @@ fi
 
 # End theft
 
-declare -x JAVA_HOME="/usr/bin"
 ulimit -c unlimited
 
 setopt histignorealldups sharehistory

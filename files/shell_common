@@ -10,3 +10,16 @@ if [ $? -eq 0 ]; then
     export GOROOT=/opt/go
     export PATH=${PATH}:${GOROOT}/bin
 fi
+
+if [ -d ${HOME}/scripts ]; then
+    export PATH=${PATH}:${HOME}/scripts
+fi
+
+export CATALINA_HOME=/opt/apache-tomcat-7.0.68
+alias tomup=${CATALINA_HOME}/bin/startup.sh
+alias tomdown=${CATALINA_HOME}/bin/shutdown.sh
+alias tomwatch="tail -f ${CATALINA_HOME}/logs/catalina.out"
+
+if [ -d /opt/gradle-2.12 ]; then
+    export PATH=${PATH}:/opt/gradle-2.12/bin
+fi
