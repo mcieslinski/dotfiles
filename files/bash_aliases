@@ -13,7 +13,6 @@ alias gedit="noterm /usr/bin/gedit"
 alias makeroute="sudo route add -net 224.0.0.0 netmask 240.0.0.0 dev eth0"
 #alias ccmake="cmake-gui"
 alias ccache="vim CMakeCache.txt"
-alias wireshark="noterm wireshark"
 alias gitk="noterm gitk"
 
 # VICTORY aliases

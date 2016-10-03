@@ -23,7 +23,7 @@ fi
 
 ulimit -c unlimited
 
-setopt histignorealldups sharehistory
+setopt histignorealldups sharehistory extendedglob
 
 # Use emacs keybindings even if our EDITOR is set to vi
 bindkey -e

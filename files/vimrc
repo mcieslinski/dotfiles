@@ -11,6 +11,7 @@ set cinoptions+=g0,:0
 set backspace=indent,eol,start
 set incsearch
 set cursorline
+set splitright
 syntax on
 filetype indent on
 set laststatus=2
