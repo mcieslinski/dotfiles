@@ -14,6 +14,7 @@ alias makeroute="sudo route add -net 224.0.0.0 netmask 240.0.0.0 dev eth0"
 #alias ccmake="cmake-gui"
 alias ccache="vim CMakeCache.txt"
 alias gitk="noterm gitk"
+alias grep="grep --color=auto"
 
 # VICTORY aliases
 export VICTORY_ROOT="/home/michael/VICTORY"
