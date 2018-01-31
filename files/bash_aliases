@@ -14,7 +14,7 @@ alias makeroute="sudo route add -net 224.0.0.0 netmask 240.0.0.0 dev eth0"
 #alias ccmake="cmake-gui"
 alias ccache="vim CMakeCache.txt"
 alias gitk="noterm gitk"
-alias grep="grep --color=auto"
+alias grep="grep --color=auto --exclude='.*.swp'"
 
 # VICTORY aliases
 export VICTORY_ROOT="/home/michael/VICTORY"
@@ -33,6 +33,32 @@ alias ve="cd ${VECTOR_ROOT}"
 alias vec="cd ${VECTOR_ROOT}/trunk/common"
 alias vej="cd ${VECTOR_ROOT}/trunk/common/j2a"
 alias vebuild="cd ${VECTOR_ROOT}/build"
+
+function atprogram()
+{
+    test -e ${1} || echo "Given: ${1}. Need to supply hex or bin for atmel."
+    /usr/local/bin/edbg -e -p -v -f ${1} -t atmel_cm7 -b
+}
+
+function atfuse()
+{
+    case ${1} in
+        read)
+            /usr/local/bin/edbg -F r,:, -t atmel_cm7 -b
+            ;;
+        default)
+            /usr/local/bin/edbg -F w,7:0,0x42 -t atmel_cm7 -b
+            ;;
+        *)
+            echo "Given ${1}. Options are read, default."
+            ;;
+    esac
+}
+
+function aterase()
+{
+    /usr/local/bin/edbg -e -t atmel_cm7 -b
+}
 
 function download()
 {

@@ -2,7 +2,7 @@
 
 export GOPATH=${HOME}/go_workspace
 export GOBIN=${GOPATH}/bin
-export PATH=${PATH}:${GOBIN}:~/scripts
+export PATH=/opt:${PATH}:${GOBIN}:~/scripts
 
 apt-cache policy golang | grep -i "installed" | grep -i "none" &> /dev/null
 

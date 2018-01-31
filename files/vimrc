@@ -12,6 +12,7 @@ set backspace=indent,eol,start
 set incsearch
 set cursorline
 set splitright
+set ttimeoutlen=0
 syntax on
 filetype indent on
 set laststatus=2
