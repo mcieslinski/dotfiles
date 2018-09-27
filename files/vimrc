@@ -28,14 +28,14 @@ let mapleader = "-"
 nnoremap    <silent>    <F7>        <esc>:tabp<cr>
 inoremap    <silent>    <F7>        <esc>:tabp<cr>
 " Move tab left
-nnoremap    <silent>    <c-F7>      <esc>:tabm -1<cr>
-vnoremap    <silent>    <c-F7>      <esc>:tabm -1<cr>
+nnoremap    <silent>    <leader><F7>      <esc>:tabm -1<cr>
+vnoremap    <silent>    <leader><F7>      <esc>:tabm -1<cr>
 " Tab-right
 nnoremap    <silent>    <F8>        <esc>:tabn<cr>
 inoremap    <silent>    <F8>        <esc>:tabn<cr>
 " Move tab right
-nnoremap    <silent>    <c-F8>      <esc>:tabm +1<cr>
-vnoremap    <silent>    <c-F8>      <esc>:tabm +1<cr>
+nnoremap    <silent>    <leader><F8>      <esc>:tabm +1<cr>
+vnoremap    <silent>    <leader><F8>      <esc>:tabm +1<cr>
 " Split-left
 nnoremap    <silent>    <F9>        <c-w>h
 inoremap    <silent>    <F9>        <esc><c-w>h

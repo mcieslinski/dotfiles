@@ -17,13 +17,14 @@ fi
 source ${LB_SCRIPTS_DIR}/util_functions.sh
 
 # The basics
-lb_testwrap lb_mklink ${LB_FILES_DIR}/bashrc ${LB_NEW_DIR}/.bashrc
-lb_testwrap lb_mklink ${LB_FILES_DIR}/zshrc ${LB_NEW_DIR}/.zshrc
+lb_testwrap lb_mklink ${LB_FILES_DIR}/bashrc            ${LB_NEW_DIR}/.bashrc
+lb_testwrap lb_mklink ${LB_FILES_DIR}/zshrc             ${LB_NEW_DIR}/.zshrc
 lb_testwrap lb_mklink ${LB_FILES_DIR}/michael_theme.zsh ${LB_NEW_DIR}/.michael_theme.zsh
-lb_testwrap lb_mklink ${LB_FILES_DIR}/bash_aliases ${LB_NEW_DIR}/.bash_aliases
-lb_testwrap lb_mklink ${LB_FILES_DIR}/profile ${LB_NEW_DIR}/.profile
-lb_testwrap lb_mklink ${LB_FILES_DIR}/dircolors ${LB_NEW_DIR}/.dircolors
-lb_testwrap lb_mklink ${LB_FILES_DIR}/shell_common ${LB_NEW_DIR}/.shell_common
+lb_testwrap lb_mklink ${LB_FILES_DIR}/bash_aliases      ${LB_NEW_DIR}/.bash_aliases
+lb_testwrap lb_mklink ${LB_FILES_DIR}/profile           ${LB_NEW_DIR}/.profile
+lb_testwrap lb_mklink ${LB_FILES_DIR}/dircolors         ${LB_NEW_DIR}/.dircolors
+lb_testwrap lb_mklink ${LB_FILES_DIR}/shell_common      ${LB_NEW_DIR}/.shell_common
+lb_testwrap lb_mklink ${LB_FILES_DIR}/tmux.conf         ${LB_NEW_DIR}/.tmux.conf
 
 # Golang. Duh.
 if [ ! -d ${HOME}/go_workspace ]; then

@@ -120,3 +120,6 @@ export QT_INSTALL_PATH=$SSMI_ROOT
 export SSMI_ROOT="/home/vrs/RVCA"
 export OSPL_URI=file://$SSMI_ROOT/config/services/ospl.xml
 
+if [ -e ~/.shell_common ]; then
+    source ~/.shell_common
+fi

@@ -34,10 +34,127 @@ alias vec="cd ${VECTOR_ROOT}/trunk/common"
 alias vej="cd ${VECTOR_ROOT}/trunk/common/j2a"
 alias vebuild="cd ${VECTOR_ROOT}/build"
 
+# VMD Aliases
+export VMD_WORK_ROOT=${HOME}/vmd_workspace
+export VMD_MCU_ROOT=${VMD_WORK_ROOT}/mcu
+alias vtimono="cd ${VMD_MCU_ROOT}/builds/vmd/modules/tms570lc43xx/examples/timono"
+alias vtilwip="cd ${VMD_MCU_ROOT}/builds/vmd/modules/tms570lc43xx/examples/tilwip"
+alias vtiring="cd ${VMD_MCU_ROOT}/builds/vmd/modules/tms570lc43xx/examples/tiring"
+alias vtidio="cd ${VMD_MCU_ROOT}/builds/vmd/modules/tms570lc43xx/examples/tidio"
+alias vvpmc="cd ${VMD_MCU_ROOT}/builds/vmd/products/vpmc"
+alias vproto="cd ${VMD_WORK_ROOT}/builds/tsproto"
+
+# $1 = root build dir
+# $2 = toolchain
+# $3 = clean build?
+function mcubuild()
+{
+    if [ ! -d ${HOME}/${1}/vmd/cmakemodules ]; then
+        echo "Need to supply directory to use as root."
+        return 1
+    fi
+    clean_build=false
+    debug_build=false
+    if [ "${3}" = "clean" ] || [ "${4}" = "clean" ]; then
+        echo "Clean build."
+        clean_build=true
+    fi
+    if [ "${3}" = "debug" ] || [ "${4}" = "debug" ]; then
+        echo "Debug build."
+        debug_build=true
+    fi
+    root_dir="${HOME}/${1}"
+    echo "Building from: ${root_dir}"
+
+    retdir=$(pwd)
+    cd ${root_dir}/vmd/scripts/build_scripts/local_build_scripts
+    ./build_all --mcu ${root_dir}/tsmicro ${root_dir}/tscore ${root_dir}/tsproto ${root_dir}/vmd ${root_dir}/vmd/cmakemodules/${2} $(${clean_build} && echo "--clean") $(${debug_build} && echo "--debug")
+    local err=${?}
+    cd ${retdir}
+    return ${err}
+}
+
+function tibuild()
+{
+    export ARM_CROSS_TOOLCHAIN="/opt/gcc-linaro-7.2.1-2017.11-x86_64_armeb-eabi"
+    export ARM_CROSS_TOOLCHAIN="/opt/gregchain"
+    echo "Building TI..."
+    mcubuild ${1} TIToolchain.cmake ${2} ${3}
+
+    for i in $(find ${HOME}/vmd_workspace -iname '*.elf'); do
+        #cp ${i} /mnt/hgfs/VMSTUFF/$(basename ${i%.elf}.out)
+        cp ${i} ${HOME}/$(basename ${i%.elf}.out)
+    done
+    for i in $(find ${HOME}/vmd_workspace -iname '*.bin'); do
+        #cp ${i} /mnt/hgfs/VMSTUFF/$(basename ${i%.elf}.out)
+        cp ${i} ${HOME}
+    done
+}
+
+function tijtag()
+{
+    local addrpart=""
+    local ippart=""
+    if [ ! -z ${1} ]; then
+        ping -c 1 ${1} &> /dev/null
+        
+        if [ ${?} -ne 0 ]; then
+            echo "Pls give a good IP address."
+            return 1
+        else
+            addrpart="${1}"
+            ippart="-ip"
+        fi
+    fi
+
+    set -x
+    JLinkExe ${ippart} ${addrpart} -if jtag -JTagConf '-1,-1' -device TMS570LC4357ZWT
+}
+
+function tiprogram()
+{
+    local bin=${1}.bin
+    test -e ${bin} || { echo "File ${bin} doesn't exist. Try again."; exit 1; }
+    local absfile=$(echo "$(cd "$(dirname "${bin}")" && pwd)/$(basename "${bin}")")
+
+    local addrpart=""
+    local ippart=""
+    if [ ! -z ${2} ]; then
+        ping -c 1 ${2} &> /dev/null
+        
+        if [ ${?} -ne 0 ]; then
+            echo "Pls give a good IP address."
+            return 1
+        else
+            addrpart="${2}"
+            ippart="-ip"
+        fi
+    fi
+
+    absfile=$(echo ${absfile} | sed 's|/|\\/|g')
+    local nufile=${HOME}/tiflasher.jlink
+    sed "s/fullpathname/${absfile}/" ${HOME}/herc.jlink > ${nufile} 2>/dev/null
+    JLinkExe -if jtag -JTagConf '-1,-1' -device TMS570LC4357ZWT -CommanderScript ${nufile} ${ippart} ${addrpart}
+    #JLinkExe -if jtag -JTagConf '-1,-1' -device TMS570LC4357ZWT -CommanderScript ${HOME}/herc.jlink ${ippart} ${addrpart}
+}
+
+function atbuild()
+{
+    export ARM_CROSS_TOOLCHAIN="/opt/arm-none-eabi"
+    echo "Building Atmel..."
+    mcubuild ${1} AtmelToolchain.cmake ${2} ${3}
+}
+
 function atprogram()
 {
     test -e ${1} || echo "Given: ${1}. Need to supply hex or bin for atmel."
     /usr/local/bin/edbg -e -p -v -f ${1} -t atmel_cm7 -b
+}
+
+function atverify()
+{
+    test -e ${1} || echo "Given: ${1}. Need to supply hex or bin for atmel."
+    /usr/local/bin/edbg -v -f ${1} -t atmel_cm7 -b
 }
 
 function atfuse()
