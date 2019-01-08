@@ -47,7 +47,7 @@ alias vproto="cd ${VMD_WORK_ROOT}/builds/tsproto"
 # $1 = root build dir
 # $2 = toolchain
 # $3 = clean build?
-function mcubuild()
+function mcubuild_old()
 {
     if [ ! -d ${HOME}/${1}/vmd/cmakemodules ]; then
         echo "Need to supply directory to use as root."
@@ -62,6 +62,54 @@ function mcubuild()
     if [ "${3}" = "debug" ] || [ "${4}" = "debug" ]; then
         echo "Debug build."
         debug_build=true
+    fi
+    root_dir="${HOME}/${1}"
+    echo "Building from: ${root_dir}"
+
+    retdir=$(pwd)
+    cd ${root_dir}/vmd/scripts/build_scripts/local_build_scripts
+    ./build_all --mcu ${root_dir}/tsmicro ${root_dir}/tscore ${root_dir}/tsproto ${root_dir}/vmd ${root_dir}/vmd/cmakemodules/${2} $(${clean_build} && echo "--clean") $(${debug_build} && echo "--debug")
+    local err=${?}
+    cd ${retdir}
+    return ${err}
+}
+
+function tibuild_old()
+{
+    export ARM_CROSS_TOOLCHAIN="/opt/gcc-linaro-7.2.1-2017.11-x86_64_armeb-eabi"
+    export ARM_CROSS_TOOLCHAIN="/opt/gregchain"
+    echo "Building TI..."
+    mcubuild_old ${1} TIToolchain.cmake ${2} ${3}
+
+    for i in $(find ${HOME}/vmd_workspace -iname '*.elf'); do
+        #cp ${i} /mnt/hgfs/VMSTUFF/$(basename ${i%.elf}.out)
+        cp ${i} ${HOME}/$(basename ${i%.elf}.out)
+    done
+    for i in $(find ${HOME}/vmd_workspace -iname '*.bin'); do
+        #cp ${i} /mnt/hgfs/VMSTUFF/$(basename ${i%.elf}.out)
+        cp ${i} ${HOME}
+    done
+}
+
+
+# $1 = root build dir
+# $2 = toolchain
+# $3 = clean build?
+function mcubuild()
+{
+    if [ ! -d ${HOME}/${1}/vmd/cmakemodules ]; then
+        echo "Need to supply directory to use as root."
+        return 1
+    fi
+    clean_build=false
+    debug_build=true
+    if [ "${3}" = "clean" ] || [ "${4}" = "clean" ]; then
+        echo "Clean build."
+        clean_build=true
+    fi
+    if [ "${3}" = "nodebug" ] || [ "${4}" = "nodebug" ]; then
+        echo "Debug build OFF."
+        debug_build=false
     fi
     root_dir="${HOME}/${1}"
     echo "Building from: ${root_dir}"

@@ -1,5 +1,8 @@
 #!/bin/bash
 
+# Add J-Link to path.
+export PATH=/opt/SEGGER/JLink:${PATH}
+
 export GOPATH=${HOME}/go_workspace
 export GOBIN=${GOPATH}/bin
 export PATH=/opt:${PATH}:${GOBIN}:~/scripts
