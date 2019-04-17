@@ -162,7 +162,7 @@ function tijtag()
 function tiprogram()
 {
     local bin=${1}.bin
-    test -e ${bin} || { echo "File ${bin} doesn't exist. Try again."; exit 1; }
+    test -e ${bin} || { echo "File ${bin} doesn't exist. Try again."; return 1; }
     local absfile=$(echo "$(cd "$(dirname "${bin}")" && pwd)/$(basename "${bin}")")
 
     local addrpart=""
@@ -184,6 +184,31 @@ function tiprogram()
     sed "s/fullpathname/${absfile}/" ${HOME}/herc.jlink > ${nufile} 2>/dev/null
     JLinkExe -if jtag -JTagConf '-1,-1' -device TMS570LC4357ZWT -CommanderScript ${nufile} ${ippart} ${addrpart}
     #JLinkExe -if jtag -JTagConf '-1,-1' -device TMS570LC4357ZWT -CommanderScript ${HOME}/herc.jlink ${ippart} ${addrpart}
+}
+
+function tigdbserver()
+{
+    local ip="${1}"
+    local selectval=""
+
+    if [ ! -z ${ip} ]; then
+        ping -c 1 ${ip} &> /dev/null
+
+        if [ ${?} -ne 0 ]; then
+            echo "Pls give a good IP address."
+            return 1
+        else
+            /opt/SEGGER/JLink/JLinkGDBServerCLExe -select ip=${ip} -device TMS570LC4357ZWT -endian big -if JTAG -speed auto -noir -noLocalhostOnly
+            return 0
+        fi
+    fi
+    
+            /opt/SEGGER/JLink/JLinkGDBServerCLExe -device TMS570LC4357ZWT -endian big -if JTAG -speed auto -noir -noLocalhostOnly
+}
+
+function tigdb()
+{
+    /opt/gregchain/bin/armeb-eabi-gdb --command=${HOME}/tigdb.cmd ${1}
 }
 
 function atbuild()
