@@ -116,7 +116,7 @@ function mcubuild()
 
     retdir=$(pwd)
     cd ${root_dir}/vmd/scripts/build_scripts/local_build_scripts
-    ./build_all --mcu ${root_dir}/tsmicro ${HOME}/rsccore ${HOME}/rsccomms ${HOME}/rscvepa ${root_dir}/tsproto ${root_dir}/vmd ${root_dir}/vmd/cmakemodules/${2} $(${clean_build} && echo "--clean") $(${debug_build} && echo "--debug")
+    ./build_all --mcu ${root_dir}/tsmicro ${root_dir}/rsccore ${root_dir}/rsccomms ${root_dir}/rscvepa ${root_dir}/tsproto ${root_dir}/vmd ${root_dir}/vmd/cmakemodules/${2} $(${clean_build} && echo "--clean") $(${debug_build} && echo "--debug")
     local err=${?}
     cd ${retdir}
     return ${err}

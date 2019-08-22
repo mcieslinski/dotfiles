@@ -27,33 +27,34 @@ if [ -d /opt/gradle-2.12 ]; then
     export PATH=${PATH}:/opt/gradle-2.12/bin
 fi
 
+alias tks="tmux kill-session -t 0"
 function tmux_init()
 {
     # Source Window
     tmux rename-window "Source"
-    tmux split-window
+    tmux split-window -p 10
+    tmux split-window -h -t 1
     tmux select-pane -U
-    tmux resize-pane -y 50
 
-    # Search Window
-    tmux new-window -n "Search"
+    ## Search Window
+    #tmux new-window -n "Search"
 
     ## Build/Program Window
     tmux new-window -n "Build/Program"
-    tmux split-window -t 2 -h
-    #
-    ## Debug/Run Window
+    tmux split-window -h -t 1.0
+
+    # Debug/Run Window
     tmux new-window -n "Debug/Run"
-    tmux split-window -t 3 -h
-    tmux split-window -t 3 
-    #
+    tmux split-window -t 2.0 -h
+    tmux split-window -t 2.1
+
     ## Misc Window
     tmux new-window -n "Misc"
-    tmux split-window -t 4 -h
-    tmux split-window -t 4
-    tmux select-pane -t 4 -L
-    tmux split-window -t 4
-    #
+    tmux split-window -t 3.0
+    tmux split-window -t 3.0 -h
+    tmux split-window -t 3.1 -h
+
     ## Go back home
     tmux select-window -t 0
+    tmux select-pane -t 0
 }
