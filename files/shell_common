@@ -7,7 +7,7 @@ export GOPATH=${HOME}/go_workspace
 export GOBIN=${GOPATH}/bin
 export PATH=/opt:${PATH}:${GOBIN}:~/scripts
 
-apt-cache policy golang | grep -i "installed" | grep -i "none" &> /dev/null
+#apt-cache policy golang | grep -i "installed" | grep -i "none" &> /dev/null
 
 if [ $? -eq 0 ]; then
     export GOROOT=/opt/go
@@ -30,6 +30,8 @@ fi
 alias tks="tmux kill-session -t 0"
 function tmux_init()
 {
+    cd ${HOME}
+
     # Source Window
     tmux rename-window "Source"
     tmux split-window -p 10
@@ -50,9 +52,9 @@ function tmux_init()
 
     ## Misc Window
     tmux new-window -n "Misc"
-    tmux split-window -t 3.0
     tmux split-window -t 3.0 -h
     tmux split-window -t 3.1 -h
+    tmux split-window -t 3.0
 
     ## Go back home
     tmux select-window -t 0
