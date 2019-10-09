@@ -42,21 +42,56 @@ function tmux_init()
     #tmux new-window -n "Search"
 
     ## Build/Program Window
-    tmux new-window -n "Build/Program"
-    tmux split-window -h -t 1.0
+    #tmux new-window -n "Build/Program"
+    #tmux split-window -h -t 1.0
 
     # Debug/Run Window
     tmux new-window -n "Debug/Run"
-    tmux split-window -t 2.0 -h
-    tmux split-window -t 2.1
+    tmux split-window -t 1.0 -h
+    tmux split-window -t 1.1
 
     ## Misc Window
     tmux new-window -n "Misc"
-    tmux split-window -t 3.0 -h
-    tmux split-window -t 3.1 -h
-    tmux split-window -t 3.0
+    tmux split-window -t 2.0 -h
+    tmux split-window -t 2.1 
+    tmux split-window -t 2.0
 
     ## Go back home
     tmux select-window -t 0
     tmux select-pane -t 0
+}
+
+function tmux_sourcewin()
+{
+    if [ "${1}" = "current" ]; then
+        tmux split-window -p 10 -c ${HOME}
+        tmux split-window -t 1 -h -c ${HOME}
+    else
+        local fullwin=$(tmux new-window -aP -c ${HOME})
+        local tsession=$(echo $fullwin | cut -d ':' -f 1)
+        local twindow=$(echo $fullwin | cut -d ':' -f 2 | cut -d '.' -f 1)
+        local tpane=$(echo $fullwin | cut -d '.' -f 2)
+        echo "${twindow}"
+
+        tmux split-window -t ${twindow}.${tpane} -p 10 -c ${HOME}
+        tmux split-window -t ${twindow}.$((${tpane} + 1)) -h -c ${HOME}
+        tmux rename-window -t ${twindow} "Sourcewin"
+    fi
+}
+
+function tmux_debugwin()
+{
+    if [ "${1}" = "current" ]; then
+        tmux split-window -h -c ${HOME}
+        tmux split-window -t 1 -c ${HOME}
+    else
+        local fullwin=$(tmux new-window -aP -c ${HOME})
+        local tsession=$(echo $fullwin | cut -d ':' -f 1)
+        local twindow=$(echo $fullwin | cut -d ':' -f 2 | cut -d '.' -f 1)
+        local tpane=$(echo $fullwin | cut -d '.' -f 2)
+
+        tmux split-window -t ${twindow}.${tpane} -h -c ${HOME}
+        tmux split-window -t ${twindow}.$((${tpane} + 1)) -c ${HOME}
+        tmux rename-window -t ${twindow} "Debugwin"
+    fi
 }
