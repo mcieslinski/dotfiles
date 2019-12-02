@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # Add J-Link to path.
-export PATH=/opt/SEGGER/JLink:${PATH}
+export PATH=/opt/SEGGER/JLink:${PATH}:~/tools/arm-bcm2708/gcc-linaro-arm-linux-gnueabihf-raspbian-x64/bin
 
 export GOPATH=${HOME}/go_workspace
 export GOBIN=${GOPATH}/bin
@@ -36,7 +36,7 @@ function tmux_init()
     tmux rename-window "Source"
     tmux split-window -p 10
     tmux split-window -h -t 1
-    tmux select-pane -U
+    tmux select-pane -t 0.0
 
     ## Search Window
     #tmux new-window -n "Search"

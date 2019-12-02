@@ -123,3 +123,4 @@ export OSPL_URI=file://$SSMI_ROOT/config/services/ospl.xml
 if [ -e ~/.shell_common ]; then
     source ~/.shell_common
 fi
+PATH=$PATH:~/tools/arm-bcm2708/gcc-linaro-arm-linux-gnueabihf-raspbian/bin
