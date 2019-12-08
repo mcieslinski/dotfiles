@@ -53,7 +53,7 @@ function tmux_init()
     ## Misc Window
     tmux new-window -n "Misc"
     tmux split-window -t 3.0 -h
-    tmux split-window -t 3.1 -h
+    tmux split-window -t 3.1
     tmux split-window -t 3.0
 
     ## Go back home

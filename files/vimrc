@@ -7,7 +7,7 @@ set tabstop=4
 set softtabstop=4
 set shiftwidth=4
 set smartindent
-set cinoptions+=g0,:0
+set cinoptions+=g0,:0,N-s
 set backspace=indent,eol,start
 set incsearch
 set cursorline
