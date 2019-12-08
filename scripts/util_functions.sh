@@ -1,8 +1,8 @@
 #!/bin/bash
-lb_bak()
+df_bak()
 {
     if [[ "${1}" = "-r" ]]; then
-        restored_file="${2%%.lb_bak}"
+        restored_file="${2%%.df_bak}"
         if [[ -e ${2} ]]; then
             test -e ${restored_file} && rm ${restored_file}
             test -e ${2} && mv ${2} ${restored_file}
@@ -13,8 +13,8 @@ lb_bak()
         fi
     else
         if [[ -e ${1} ]]; then
-            test -e "${1}.lb_bak"
-            test $? -ne 0 && mv ${1} "${1}.lb_bak"
+            test -e "${1}.df_bak"
+            test $? -ne 0 && mv ${1} "${1}.df_bak"
         else
             echo "${1} does not exist. This is pretty much not possible unless you fucked with the code or the files."
             echo "Unfuck whatever you fucked and try this again."
@@ -23,21 +23,21 @@ lb_bak()
     fi
 }
 
-lb_noterm()
+df_noterm()
 {
     (nohup $@ &) &> /dev/null
 }
 
-lb_testwrap()
+df_testwrap()
 {
-    if [[ "${LB_TEST_MODE}" = "HELL_YEAH" ]]; then
+    if [[ "${DF_TEST_MODE}" = "HELL_YEAH" ]]; then
         echo $@
     else
         $@
     fi
 }
 
-lb_mklink()
+df_mklink()
 {
     if [[ -e ${2} ]]; then
         if [[ -L ${2} ]]; then
@@ -45,7 +45,7 @@ lb_mklink()
             read deleteLink
             test "${deleteLink}" = "y" && rm ${2} && ln -s ${1} ${2}
         else
-            lb_bak ${2}
+            df_bak ${2}
             ln -s ${1} ${2}
         fi
     else
@@ -53,10 +53,10 @@ lb_mklink()
     fi
 }
 
-lb_unsource()
+df_unsource()
 {
-    unset -f lb_bak
-    unset -f lb_noterm
-    unset -f lb_mklink
-    unset -f lb_unsource
+    unset -f df_bak
+    unset -f df_noterm
+    unset -f df_mklink
+    unset -f df_unsource
 }

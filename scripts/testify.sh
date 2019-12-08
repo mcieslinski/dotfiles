@@ -1,7 +1,7 @@
 #!/bin/bash
 
-# Change the home directory in all the files to linux_base_root/test or back
-echo "If you are not running this from the linux_base root, you will not be pleased with what happens. Continue? (y/n): "
+# Change the home directory in all the files to dotfiles/test or back
+echo "If you are not running this from the dotfiles root, you will not be pleased with what happens. Continue? (y/n): "
 read doIt
 
 test "${doIt}" = "n" && echo "A wise decision." && return 1

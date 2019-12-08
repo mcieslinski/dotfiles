@@ -3,7 +3,7 @@ FILES_DIR="$(pwd)/files"
 SCRIPTS_DIR="$(pwd)/scripts"
 TEST_DIR="$(pwd)/test"
 
-# Source the linux_base functions
+# Source the dotfiles functions
 source ${SCRIPTS_DIR}/util_functions.sh
 
 # The basics
