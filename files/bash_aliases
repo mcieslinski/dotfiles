@@ -208,7 +208,7 @@ function tigdbserver()
 
 function tigdb()
 {
-    /opt/gregchain/bin/armeb-eabi-gdb --command=${HOME}/tigdb.cmd ${1}
+    /opt/gregchain/bin/armeb-eabi-gdb ${1} --command=${HOME}/tigdb.cmd
 }
 
 function atbuild()
@@ -283,7 +283,7 @@ function extract()
     nargs=$#;
 
     if [[ $# -ne 1 && $# -ne 2 ]]; then
-        echo "Ya dun goofed. Usage: untar archive [directory]"
+        echo "Ya dun goofed. Usage: extract archive [directory]"
         return 1
     else
         filename=""
