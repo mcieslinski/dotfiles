@@ -27,6 +27,21 @@ if [ -d /opt/gradle-2.12 ]; then
     export PATH=${PATH}:/opt/gradle-2.12/bin
 fi
 
+function fix_chrome_launcher()
+{
+    local gcdesktop=/usr/share/applications/google-chrome.desktop
+
+    if [ ! -e ${gcdesktop} ]; then
+        echo "Desktop file for chrome doesn't exist where expected."
+        echo "Maybe time to fix function for a new OS?"
+        return 1;
+    fi
+
+    echo "Adding --force-dark-mode to chrome Exec lines in desktop file."
+
+    sudo sed -i '/Exec/s/$/ --force-dark-mode/' ${gcdesktop}
+}
+
 alias tks="tmux kill-session -t 0"
 function tmux_init()
 {
