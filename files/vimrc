@@ -71,10 +71,10 @@ augroup END
 
 augroup cpp_autocommands
     autocmd     BufNewFile,BufRead      *.h,*.c,*.cpp,*.hpp     setlocal number
-    autocmd     BufNewFile,BufRead      *.h,*.c,*.cpp,*.hpp     hi LineNr ctermfg=DarkGrey
-    autocmd     BufNewFile,BufRead      *.h,*.c,*.cpp,*.hpp     hi CursorLineNr ctermfg=White
+    autocmd     BufNewFile,BufRead      *.h,*.c,*.cpp,*.hpp     hi LineNr ctermfg=Grey
+    autocmd     BufNewFile,BufRead      *.h,*.c,*.cpp,*.hpp     hi CursorLineNr ctermfg=DarkGrey
     autocmd     BufNewFile,BufRead      *.h,*.c,*.cpp,*.hpp     hi LineNr ctermbg=None
-    autocmd     BufNewFile,BufRead      *.h,*.c,*.cpp,*.hpp     hi CursorLineNr ctermbg=None
+    autocmd     BufNewFile,BufRead      *.h,*.c,*.cpp,*.hpp     hi CursorLineNr ctermbg=DarkYellow
     " Fold by '{'
     autocmd     BufNewFile,BufRead      *.h,*.c,*.cpp,*.hpp     nnoremap    <buffer>            <leader>f   zfa{
 
